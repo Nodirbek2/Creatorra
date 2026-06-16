@@ -1,0 +1,6 @@
+{
+  "name": "Creatorra",
+  "description": "A centralized platform for creators in Uzbekistan to sell courses, live sessions, and digital content securely.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
