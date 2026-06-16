@@ -261,19 +261,19 @@ export const translations = {
         investor: "📊 Investor",
         supporter: "✨ Supporter"
       },
-      messageLabel: "Leave a message or suggestion for Nodir (Optional)",
+      messageLabel: "Leave a message or suggestion for Nodirbek (Optional)",
       messagePlaceholder: "e.g. Love the StreamSafe anti-piracy protection. Let's schedule a call!",
       submitBtn: "Request Priority Early Access",
-      telegramBannerTitle: "⚡ Have investor questions? Speak directly to Nodir",
+      telegramBannerTitle: "⚡ Have investor questions? Speak directly to Nodirbek",
       telegramBtn: "Contact via Telegram",
       telegramCaption: "Clicking opens Telegram in a new tab. Direct responder address is @Nodirbek_B",
       successTitle: "You're on the list, {name}!",
       successDesc: "Thank you for validating Creatorra. Your local early-access reservation code has been registered on the server:",
       successRoleNote: {
-        investor: "🚀 Nodir has logged your investor intent! We will prepare the formal pitch documents and slide decks.",
+        investor: "🚀 Nodirbek has logged your investor intent! We will prepare the formal pitch documents and slide decks.",
         other: "🚀 Welcome! We will notify you the moment the secure humo-checkout sandbox completes development."
       },
-      successMemo: "Your logged memo to Nodir:",
+      successMemo: "Your logged memo to Nodirbek:",
       anotherEmail: "Enter Another Email",
       chatTg: "Chat on Telegram",
       adjustMsg: "Want to adjust your message or enter another email?"
@@ -851,10 +851,10 @@ export const translations = {
         investor: "📊 Инвестор",
         supporter: "✨ Подписчик"
       },
-      messageLabel: "Сообщение или предложение для Нодира (Опционально)",
+      messageLabel: "Сообщение или предложение для Нодирбека (Опционально)",
       messagePlaceholder: "Например: Понравилась защита StreamSafe. Давайте созвонимся!",
       submitBtn: "Запросить Ранний Доступ",
-      telegramBannerTitle: "⚡ Есть вопросы инвестора? Свяжитесь напрямую с Нодиром",
+      telegramBannerTitle: "⚡ Есть вопросы инвестора? Свяжитесь напрямую с Нодирбеком",
       telegramBtn: "Связаться в Telegram",
       telegramCaption: "При клике откроется Telegram. Прямой адрес: @Nodirbek_B",
       successTitle: "Вы в списке, {name}!",
@@ -863,7 +863,7 @@ export const translations = {
         investor: "🚀 Регистрация инвестора подтверждена! Мы подготовим презентацию и финансовые слайды.",
         other: "🚀 Добро пожаловать! Мы оповестим вас, как только завершим тестирование CLICK/Payme песочницы."
       },
-      successMemo: "Ваше сообщение Нодиру:",
+      successMemo: "Ваше сообщение Нодирбеку:",
       anotherEmail: "Ввести другой Email",
       chatTg: "Телеграм Чат",
       adjustMsg: "Хотите изменить сообщение или ввести другую почту?"

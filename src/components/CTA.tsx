@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Send, CheckCircle2, Heart, ShieldCheck, Sparkles, ArrowRight, UserPlus, FileSpreadsheet } from 'lucide-react';
 import { EarlyAccessSubmission } from '../types';
+import { useLanguage } from '../context/LanguageContext';
 
 interface CTAProps {
   onSuccess: (sub: EarlyAccessSubmission) => void;
 }
 
 export default function CTA({ onSuccess }: CTAProps) {
+  const { t } = useLanguage();
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [role, setRole] = useState<'creator' | 'investor' | 'supporter'>('creator');
@@ -58,13 +60,13 @@ export default function CTA({ onSuccess }: CTAProps) {
               {/* Text Header */}
               <div className="space-y-3.5">
                 <span className="font-mono text-[10px] text-indigo-705 tracking-widest uppercase bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100 inline-block font-semibold">
-                  Secure Your Priority Slot
+                  {t.cta.badge}
                 </span>
                 <h2 className="font-display font-extrabold text-3xl sm:text-5xl tracking-normal text-slate-900 font-sans">
-                  Start building your audience with Creatorra
+                  {t.cta.title}
                 </h2>
-                <p className="text-xs sm:text-sm text-slate-500 leading-normal max-w-xl mx-auto font-light font-sans">
-                  Whether you are a creator ready to protect your premium materials, or an investor seeking to explore the Central Asian digital boom—get early access today.
+                <p className="text-xs sm:text-sm text-slate-550 leading-normal max-w-xl mx-auto font-light font-sans">
+                  {t.cta.desc}
                 </p>
               </div>
 
@@ -74,10 +76,10 @@ export default function CTA({ onSuccess }: CTAProps) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Name */}
                   <div className="space-y-1">
-                    <label className="block text-[10px] font-mono text-slate-450 uppercase font-bold">First Name / Organiser</label>
+                    <label className="block text-[10px] font-mono text-slate-450 uppercase font-bold">{t.cta.nameLabel}</label>
                     <input
                       type="text"
-                      placeholder="e.g. Nodirbek"
+                      placeholder={t.cta.namePlaceholder}
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       className="w-full bg-slate-50 border border-slate-205 focus:border-indigo-500/80 focus:bg-white rounded-xl px-4 py-3 text-xs text-slate-800 focus:outline-none transition-colors placeholder:text-slate-400 font-medium shadow-3xs"
@@ -86,11 +88,11 @@ export default function CTA({ onSuccess }: CTAProps) {
 
                   {/* Email */}
                   <div className="space-y-1">
-                    <label className="block text-[10px] font-mono text-slate-450 uppercase font-bold">Email Address (Required)</label>
+                    <label className="block text-[10px] font-mono text-slate-450 uppercase font-bold">{t.cta.emailLabel}</label>
                     <input
                       type="email"
                       required
-                      placeholder="e.g. nodir@creatorra.uz"
+                      placeholder={t.cta.emailPlaceholder}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="w-full bg-slate-50 border border-slate-205 focus:border-indigo-500/80 focus:bg-white rounded-xl px-4 py-3 text-xs text-slate-800 focus:outline-none transition-colors placeholder:text-slate-400 font-medium shadow-3xs"
@@ -100,12 +102,12 @@ export default function CTA({ onSuccess }: CTAProps) {
 
                 {/* Role Switcher */}
                 <div className="space-y-2">
-                  <label className="block text-[10px] font-mono text-slate-450 uppercase font-bold">What describes you best?</label>
+                  <label className="block text-[10px] font-mono text-slate-450 uppercase font-bold">{t.cta.roleLabel}</label>
                   <div className="grid grid-cols-3 gap-2 bg-slate-50 p-1 rounded-xl border border-slate-200">
                     {[
-                      { id: 'creator', label: '💻 Creator' },
-                      { id: 'investor', label: '📊 Investor' },
-                      { id: 'supporter', label: '✨ Supporter' }
+                      { id: 'creator', label: t.cta.roles.creator },
+                      { id: 'investor', label: t.cta.roles.investor },
+                      { id: 'supporter', label: t.cta.roles.supporter }
                     ].map((item) => (
                       <button
                         key={item.id}
@@ -125,10 +127,10 @@ export default function CTA({ onSuccess }: CTAProps) {
 
                 {/* Message */}
                 <div className="space-y-1">
-                  <label className="block text-[10px] font-mono text-slate-450 uppercase font-bold">Leave a message or suggestion for Nodir (Optional)</label>
+                  <label className="block text-[10px] font-mono text-slate-450 uppercase font-bold">{t.cta.messageLabel}</label>
                   <textarea
                     rows={3}
-                    placeholder="e.g. Love the StreamSafe anti-piracy protection. Let's schedule a call!"
+                    placeholder={t.cta.messagePlaceholder}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     className="w-full bg-slate-50 border border-slate-205 focus:border-indigo-505/80 focus:bg-white rounded-xl px-4 py-2.5 text-xs text-slate-800 focus:outline-none transition-colors resize-none placeholder:text-slate-400 font-medium shadow-3xs"
@@ -137,10 +139,10 @@ export default function CTA({ onSuccess }: CTAProps) {
 
                 <button
                   type="submit"
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-sans font-bold py-3.5 rounded-xl text-xs transition-all shadow-md flex items-center justify-center space-x-2"
+                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-sans font-bold py-3.5 rounded-xl text-xs transition-all shadow-md flex items-center justify-center space-x-2 animate-pulse-subtle"
                 >
                   <UserPlus className="w-4 h-4 text-white" />
-                  <span>Request Priority Early Access</span>
+                  <span>{t.cta.submitBtn}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
 
@@ -149,7 +151,7 @@ export default function CTA({ onSuccess }: CTAProps) {
               {/* Support Button (REQUIRED BY PROMPT) */}
               <div className="pt-6 border-t border-slate-150 max-w-lg mx-auto space-y-3.5 font-sans">
                 <span className="block text-[11px] text-slate-400 font-mono uppercase font-bold">
-                  ⚡ Have investor questions? Speak directly to Nodir
+                  {t.cta.telegramBannerTitle}
                 </span>
                 
                 <a
@@ -160,11 +162,11 @@ export default function CTA({ onSuccess }: CTAProps) {
                   className="inline-flex items-center space-x-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-7 py-3 rounded-2xl text-xs font-bold transition-all shadow-2xs border border-indigo-150"
                 >
                   <Send className="w-4 h-4 text-indigo-600" />
-                  <span>Contact via Telegram</span>
+                  <span>{t.cta.telegramBtn}</span>
                 </a>
                 
                 <p className="text-[10px] text-slate-400 font-light">
-                  Clicking opens Telegram in a new tab. Direct responder address is @Nodirbek_B
+                  {t.cta.telegramCaption}
                 </p>
               </div>
 
@@ -178,10 +180,10 @@ export default function CTA({ onSuccess }: CTAProps) {
 
               <div className="space-y-2.5 max-w-md mx-auto">
                 <h3 className="font-display font-extrabold text-2xl text-slate-900">
-                  You're on the list, {name || 'scholar'}!
+                  {t.cta.successTitle.replace('{name}', name || 'scholar')}
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-light">
-                  Thank you for validating Creatorra. Your local early-access reservation code has been registered on the server:
+                  {t.cta.successDesc}
                 </p>
                 <code className="inline-block bg-slate-50 border border-slate-150 text-slate-805 font-mono font-bold text-sm px-4 py-2 rounded-xl mt-2 select-all">
                   {referralCode}
@@ -189,26 +191,26 @@ export default function CTA({ onSuccess }: CTAProps) {
               </div>
 
               <div className="p-4 bg-indigo-50 border border-indigo-100 rounded-2xl max-w-lg mx-auto text-xs text-indigo-700 font-sans leading-relaxed">
-                🚀 {role === 'investor' 
-                  ? 'Nodir has logged your investor intent! We will prepare the formal pitch documents and slide decks.' 
-                  : 'Welcome! We will notify you the moment the secure humo-checkout sandbox completes development.'}
+                {role === 'investor' 
+                  ? t.cta.successRoleNote.investor 
+                  : t.cta.successRoleNote.other}
               </div>
 
               {message && (
                 <div className="p-3.5 bg-slate-50 border border-slate-150 rounded-xl max-w-md mx-auto text-left">
-                  <span className="block text-[8px] font-mono text-slate-400 uppercase font-bold">Your logged memo to Nodir:</span>
-                  <p className="text-xs text-slate-550 mt-1 italic font-light">"{message}"</p>
+                  <span className="block text-[8px] font-mono text-slate-400 uppercase font-bold">{t.cta.successMemo}</span>
+                  <p className="text-xs text-slate-505 mt-1 italic font-light">"{message}"</p>
                 </div>
               )}
 
               <div className="pt-4 border-t border-slate-150 space-y-3.5">
-                <p className="text-xs text-slate-405">Want to adjust your message or enter another email?</p>
+                <p className="text-xs text-slate-405">{t.cta.adjustMsg}</p>
                 <div className="flex justify-center space-x-3">
                   <button
                     onClick={handleReset}
                     className="px-4 py-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-600 hover:text-slate-800 transition-all font-sans font-semibold shadow-3xs cursor-pointer"
                   >
-                    Enter Another Email
+                    {t.cta.anotherEmail}
                   </button>
                   <a
                     href="https://t.me/Nodirbek_B"
@@ -217,7 +219,7 @@ export default function CTA({ onSuccess }: CTAProps) {
                     className="flex items-center space-x-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold font-sans transition-all shadow-3xs"
                   >
                     <Send className="w-3.5 h-3.5 text-white" />
-                    <span>Chat on Telegram</span>
+                    <span>{t.cta.chatTg}</span>
                   </a>
                 </div>
               </div>
