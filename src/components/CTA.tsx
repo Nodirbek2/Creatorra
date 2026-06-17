@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Send, CheckCircle2, Heart, ShieldCheck, Sparkles, ArrowRight, UserPlus, FileSpreadsheet } from 'lucide-react';
 import { EarlyAccessSubmission } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 
 interface CTAProps {
   onSuccess: (sub: EarlyAccessSubmission) => void;
+  prefilledEmail?: string;
 }
 
-export default function CTA({ onSuccess }: CTAProps) {
+export default function CTA({ onSuccess, prefilledEmail }: CTAProps) {
   const { t } = useLanguage();
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
@@ -16,20 +17,56 @@ export default function CTA({ onSuccess }: CTAProps) {
   const [submitted, setSubmitted] = useState(false);
   const [referralCode, setReferralCode] = useState('');
 
-  const handleRegister = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (prefilledEmail) {
+      setEmail(prefilledEmail);
+    }
+  }, [prefilledEmail]);
+
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
 
     // Create random local referral code for engagement
-    const code = 'CR-' + Math.floor(100000 + Math.random() * 900000);
+    const code = 'CR-' + Math.floor(100000 + Math.random() * 900055);
+    const dateStr = new Date().toLocaleString();
     setReferralCode(code);
     
-    onSuccess({
+    const submission: EarlyAccessSubmission = {
       email,
       name,
       role,
-      message
-    });
+      message,
+      code,
+      date: dateStr
+    };
+
+    // Save locally
+    try {
+      const stored = localStorage.getItem('creatorra_submissions');
+      const submissionsList = stored ? JSON.parse(stored) : [];
+      submissionsList.unshift(submission);
+      localStorage.setItem('creatorra_submissions', JSON.stringify(submissionsList));
+    } catch (err) {
+      console.error('Failed to save submission locally:', err);
+    }
+
+    // Trigger Google Sheet Webhook in background if configured
+    const webhookUrl = localStorage.getItem('creatorra_webhook_url');
+    if (webhookUrl) {
+      try {
+        fetch(webhookUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(submission)
+        });
+      } catch (err) {
+        console.error('Failed to trigger Google Sheet webhook:', err);
+      }
+    }
+    
+    onSuccess(submission);
     setSubmitted(true);
   };
 

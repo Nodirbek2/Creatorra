@@ -5,9 +5,10 @@ import { useLanguage } from '../context/LanguageContext';
 
 interface HeaderProps {
   onJoinClick: () => void;
+  onDemoClick: () => void;
 }
 
-export default function Header({ onJoinClick }: HeaderProps) {
+export default function Header({ onJoinClick, onDemoClick }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
@@ -103,6 +104,17 @@ export default function Header({ onJoinClick }: HeaderProps) {
               <span>{t.cta.telegramBtn}</span>
             </a>
 
+            {/* Interactive Demo Sandbox Button */}
+            <button
+              onClick={onDemoClick}
+              className="px-4 py-2 text-xs font-semibold rounded-xl bg-[#0F172A] text-white hover:bg-slate-800 border border-slate-700/80 transition-all duration-200 flex items-center space-x-1.5 cursor-pointer shadow-indigo-500/10 shadow-sm"
+            >
+              <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping"></span>
+              <span>
+                {language === 'uz' ? 'Demo Platforma ⚡' : language === 'ru' ? 'Демо Платформа ⚡' : 'Interactive Demo ⚡'}
+              </span>
+            </button>
+
             <button
               id="early-access-header-btn"
               onClick={onJoinClick}
@@ -174,6 +186,18 @@ export default function Header({ onJoinClick }: HeaderProps) {
           </div>
           
           <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row gap-3">
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onDemoClick();
+              }}
+              className="flex items-center justify-center space-x-2 px-4 py-3 bg-[#0F172A] text-white font-semibold text-sm rounded-xl hover:bg-slate-800 border border-slate-700/80 transition-all cursor-pointer"
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+              <span>
+                {language === 'uz' ? 'Demo Platforma ⚡' : language === 'ru' ? 'Демо Платформа ⚡' : 'Interactive Demo ⚡'}
+              </span>
+            </button>
             <a
               href="https://t.me/Nodirbek_B"
               target="_blank"

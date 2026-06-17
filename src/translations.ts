@@ -298,7 +298,7 @@ export const translations = {
   },
   uz: {
     nav: {
-      pain: "Muammo va Qaroqchilik",
+      pain: "Muammo",
       solution: "Biznes Yechimlar",
       howItWorks: "Qanday Ishlaydi?",
       market: "Bozor Imkoniyati",
@@ -311,7 +311,7 @@ export const translations = {
       desc: "Creatorra — o'zbekistonlik kontent yaratuvchilari, ekspertlar va video-repetitorlar uchun maxsus ishlab chiqilgan premium o'quv va hosting platformasi. Humo va Uzcard to'lovlarini avtomatlashtiring, darslaringizni o'g'rilikdan himoyalang va daromadni oshiring.",
       inputPlaceholder: "Elektron pochtangizni kiriting...",
       ctaButton: "Erta Kirishhuquqini Olish",
-      bottomText: "Mutlaqo bepul ulanish. 10 daqiqada ishga tushadi.",
+      bottomText: "Kontakt qoldiring va siz bilan bog'lanishimizni kuting",
       avgCap: "O'rtacha oylik daromad",
       piracyState: "Telegram o'g'riligidan asralgan",
       payoutState: "Tezkor Humo to'lovlari",
@@ -322,7 +322,7 @@ export const translations = {
       balance: "SIMULYATSIYA QILINGAN BALANS",
       tabProducts: "Darslar va Mahsulotlar",
       tabAnalytics: "Auditoriya Analitikasi",
-      tabSecurity: "Qaroqchilikka Qarshi Himoya",
+      tabSecurity: "O'g'rilanishi va tarqatilishga qarshi himoya",
       portfolioTitle: "SIZNING RAQAMLI AKADEMIYANGIZ",
       simulatedBuy: "+ Talaba xaridini simulyatsiya qilish",
       course1: "4-Dars: Toshkent brendlari uchun ilg'or Instagram voronkalari",
@@ -346,7 +346,7 @@ export const translations = {
       title: "Nima uchun Markaziy Osiyo mualliflari daromadining 60% gacha qismini yo'qotadi",
       desc: "O'zbekistonda ta'lim bozori tez o'smoqda, biroq mualliflar o'z bilimlarini o'g'rilikka va bank to'siqlariga nisbatan himoyasiz bo'lgan noqonuniy usullar orqali sotishmoqda.",
       items: {
-        card1Title: "Telegram Kanallardagi Qaroqchilik",
+        card1Title: "Telegram Kanallardagi O'g'rilanishi va Tarqatilishga",
         card1Desc: "Mualliflar o'z kurslarini yopiq Telegram kanallari yoki Google Drive orqali tarqatishadi. 48 soat ichida darsliklar nusxalanib, ochiq guruhlarda shunchaki tekinga yoki dollarlarga sotib yuboriladi.",
         card1Quote: "o'zbek kurslarining 92 foizi qo'lda tarqaladi",
         card2Title: "Qo'lda To'lov Tizimi to'siqlari",
@@ -519,7 +519,7 @@ export const translations = {
       desc: "Creatorra shunchaki to'lov tizimi emas. Biz rivojlanayotgan davlatlarda kontent ekspertlarini kuchaytirish uchun dars platformasi va fintek relslarini quramiz.",
       steps: {
         step1Phase: "1-Bosqich",
-        step1Title: "Mahalliy Darvoza va Qaroqchilikka qarshi Player",
+        step1Title: "Mahalliy Darvoza va o'g'rilanishi va tarqatilishga qarshi Player",
         step1Timeline: "HOZIRGI MVP ISHLANMA",
         step1Desc: "O'zbekiston to'lov integratsiyalarini (Click, Payme) yo'lga qo'yish hamda darslarni brauzer orqali yuklab olishni taqiqlovchi xavfsiz pleyerni ishga tushirish.",
         step1Badge: "Faol Diqqat Markazida",
@@ -544,7 +544,7 @@ export const translations = {
     },
     cta: {
       badge: "Ustuvor Sahifangizni Band Qiling",
-      title: "Creatorra bilan o'z onlayn-imperiyangizni boshlang",
+      title: "Creatorra bilan kontentingizni pulga aylantirishni boshlang",
       desc: "O'z mualliflik darslaringizni o'g'rilikdan himoyalamoqchi bo'lgan creator bo'lasizmi yoki Markaziy Osiyo boomiga qiziqayotgan investor bo'lasizmi - hoziroq ro'yxatdan o'ting.",
       nameLabel: "Ismingiz / Tashkilotchi nomi",
       namePlaceholder: "Masalan: Nodirbek",

@@ -4,6 +4,8 @@ export interface EarlyAccessSubmission {
   name?: string;
   telegram?: string;
   message?: string;
+  code?: string;
+  date?: string;
 }
 
 export interface ProblemItem {

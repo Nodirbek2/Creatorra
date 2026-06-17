@@ -11,10 +11,38 @@ import { LogoFull } from './components/Logo';
 import { useLanguage } from './context/LanguageContext';
 import { EarlyAccessSubmission } from './types';
 import { Send, Heart, ShieldCheck } from 'lucide-react';
+import AdminPanel from './components/AdminPanel';
+import DemoPlatform from './components/DemoPlatform';
 
 export default function App() {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const { t, language } = useLanguage();
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [isDemoOpen, setIsDemoOpen] = useState(false);
+  const [prefilledEmail, setPrefilledEmail] = useState('');
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+  React.useEffect(() => {
+    const handleOnline = () => {
+      setIsOnline(true);
+      showToast(language === 'uz' 
+        ? "🟢 Onlayn ulanish tiklandi!" 
+        : language === 'ru' 
+        ? "🟢 Сетевое подключение восстановлено!" 
+        : "🟢 Network connection restored!");
+    };
+    const handleOffline = () => {
+      setIsOnline(false);
+    };
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, [language]);
 
   // Smooth scroll handler
   const handleJoinClick = () => {
@@ -26,6 +54,8 @@ export default function App() {
 
   // When submitting from hero, we scroll to CTA & display a helpful toast
   const handleHeroEmailSubmit = (email: string) => {
+    setPrefilledEmail(email);
+    
     // Scroll to CTA form to complete registration
     const ctaSection = document.getElementById('cta');
     if (ctaSection) {
@@ -34,13 +64,14 @@ export default function App() {
 
     // Attempt to locate input in CTA and focus it
     setTimeout(() => {
-      const emailInput = document.querySelector('input[type="email"]') as HTMLInputElement;
-      if (emailInput) {
-        emailInput.value = email;
-        // Trigger generic change event to update state in CTA component
-        const event = new Event('input', { bubbles: true });
-        emailInput.dispatchEvent(event);
-        emailInput.focus();
+      const nameInput = document.querySelector('#cta input[type="text"]') as HTMLInputElement;
+      if (nameInput) {
+        nameInput.focus();
+      } else {
+        const emailInput = document.querySelector('#cta input[type="email"]') as HTMLInputElement;
+        if (emailInput) {
+          emailInput.focus();
+        }
       }
     }, 600);
 
@@ -71,13 +102,34 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-[#7A19FF] selection:text-white antialiased overflow-x-hidden">
       
+      {!isOnline && (
+        <div id="offline-bar" className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-red-600 via-rose-600 to-red-700 text-white text-xs py-2 px-4 shadow-lg flex items-center justify-center gap-3 animate-slide-in font-medium">
+          <span className="w-2 h-2 rounded-full bg-white animate-ping"></span>
+          <span>
+            {language === 'uz' 
+              ? '⚠️ Aloqa uzildi. Internet yoki VPN ulanishini tekshiring!' 
+              : language === 'ru' 
+              ? '⚠️ Сетевое соединение прервано. Проверьте интернет или VPN!' 
+              : '⚠️ Network connection lost. Please check your internet or VPN!'}
+          </span>
+          <button 
+            type="button"
+            onClick={() => window.location.reload()} 
+            className="bg-white/20 hover:bg-white/35 text-white border border-white/30 px-2.5 py-1 rounded text-[10px] font-bold uppercase transition-all cursor-pointer"
+          >
+            {language === 'uz' ? 'Yangilash' : language === 'ru' ? 'Обновить' : 'Reload'}
+          </button>
+        </div>
+      )}
+
       {/* Floating Glassmorphism Header */}
-      <Header onJoinClick={handleJoinClick} />
+      <Header onJoinClick={handleJoinClick} onDemoClick={() => setIsDemoOpen(true)} />
 
       {/* Hero Section containing Creatorra Simulated Creator Screen */}
       <Hero 
         onJoinClick={handleJoinClick} 
         onSubmitEmail={handleHeroEmailSubmit} 
+        onDemoClick={() => setIsDemoOpen(true)}
       />
 
       {/* Problem Section (manual Uzcard/Humo verified vs. Automated store) */}
@@ -96,7 +148,7 @@ export default function App() {
       <Vision />
 
       {/* Call To Action Form & Telegram Direct Support Buttons */}
-      <CTA onSuccess={handleCTASuccess} />
+      <CTA onSuccess={handleCTASuccess} prefilledEmail={prefilledEmail} />
 
       {/* Global Interactive Toast Notification Bar */}
       {toastMessage && (
@@ -175,12 +227,27 @@ export default function App() {
               <span>{t.footer.madeWith}</span>
               <Heart className="w-3 h-3 text-[#7A19FF] fill-[#7A19FF] inline animate-pulse" />
             </div>
+            <div className="flex items-center">
+              <button 
+                onClick={() => setIsAdminOpen(true)}
+                className="hover:text-indigo-600 hover:scale-[1.02] transition-all uppercase font-bold text-[#7A19FF] tracking-wider inline-flex items-center space-x-1 cursor-pointer bg-slate-50 hover:bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200"
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-indigo-600 animate-pulse shrink-0" />
+                <span>{language === 'uz' ? "Admin Boshqaruvi" : "Admin Panel"}</span>
+              </button>
+            </div>
             <div className="flex space-x-4">
               <span>{t.footer.technologies}</span>
               <span>•</span>
               <span className="text-[#5D36FF] font-semibold">{t.footer.themeDesc}</span>
             </div>
           </div>
+
+          <AdminPanel isOpen={isAdminOpen} onClose={() => setIsAdminOpen(false)} />
+
+          {isDemoOpen && (
+            <DemoPlatform onClose={() => setIsDemoOpen(false)} />
+          )}
 
         </div>
       </footer>

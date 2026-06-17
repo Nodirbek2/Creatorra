@@ -15,9 +15,10 @@ import { useLanguage } from '../context/LanguageContext';
 interface HeroProps {
   onJoinClick: () => void;
   onSubmitEmail: (email: string) => void;
+  onDemoClick: () => void;
 }
 
-export default function Hero({ onJoinClick, onSubmitEmail }: HeroProps) {
+export default function Hero({ onJoinClick, onSubmitEmail, onDemoClick }: HeroProps) {
   const [emailInput, setEmailInput] = useState('');
   const [activeTab, setActiveTab] = useState<'manager' | 'analytics' | 'security'>('manager');
   const [earningsCycle, setEarningsCycle] = useState(38450120);
@@ -103,6 +104,21 @@ export default function Hero({ onJoinClick, onSubmitEmail }: HeroProps) {
                 <span>{t.hero.bottomText}</span>
               </p>
             </form>
+
+            {/* Quick Link to launch Interactive Demo right inside Hero text column */}
+            <div className="pt-1 text-left">
+              <button
+                type="button"
+                onClick={onDemoClick}
+                className="group inline-flex items-center space-x-2 text-[#7A19FF] hover:text-[#5D36FF] text-xs font-semibold font-sans cursor-pointer transition-colors bg-indigo-50/60 hover:bg-indigo-100/60 px-3.5 py-2 rounded-xl border border-indigo-100/40"
+              >
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>
+                  {language === 'uz' ? 'Yoki platformamiz interaktiv demoni sinab ko\'ring' : language === 'ru' ? 'Или протестируйте интерактивную демо-платформу' : 'Or try our interactive platform demo'}
+                </span>
+                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+              </button>
+            </div>
 
             {/* Quick stats grid for social proof/investor validation */}
             <div className="grid grid-cols-3 gap-4 pt-4 border-t border-slate-200 max-w-md text-left">
