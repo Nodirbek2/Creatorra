@@ -439,7 +439,7 @@ export default function DemoPlatform({ onClose }: { onClose: () => void }) {
 
   // Course Curriculum mock list
   const [lessons, setLessons] = useState([
-    { id: '1', title: language === 'uz' ? 'Shaxsiy rivojlanish 1-dars' : language === 'ru' ? 'Личностное развитие 1-урок' : 'Personal Development Lesson 1', duration: '14:20', isFree: true, url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4' },
+    { id: '1', title: language === 'uz' ? 'Shaxsiy rivojlanish 1-dars' : language === 'ru' ? 'Личностное развитие 1-урок' : 'Personal Development Lesson 1', duration: '14:20', isFree: true, url: 'https://archive.org/download/Rick_Astley_Never_Gonna_Give_You_Up/Rick_Astley_Never_Gonna_Give_You_Up.mp4' },
     { id: '2', title: language === 'uz' ? 'Shaxsiy rivojlanish 2-dars' : language === 'ru' ? 'Личностное развитие 2-урок' : 'Personal Development Lesson 2', duration: '22:15', isFree: false, url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
     { id: '3', title: language === 'uz' ? 'Shaxsiy rivojlanish 3-dars' : language === 'ru' ? 'Личностное развитие 3-урок' : 'Personal Development Lesson 3', duration: '18:40', isFree: false, url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4' },
     { id: '4', title: language === 'uz' ? 'Shaxsiy rivojlanish 4-dars' : language === 'ru' ? 'Личностное развитие 4-урок' : 'Personal Development Lesson 4', duration: '25:05', isFree: false, url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4' }
@@ -450,7 +450,7 @@ export default function DemoPlatform({ onClose }: { onClose: () => void }) {
   // Keep lesson titles in sync when language changes dynamically
   useEffect(() => {
     setLessons([
-      { id: '1', title: language === 'uz' ? 'Shaxsiy rivojlanish 1-dars' : language === 'ru' ? 'Личностное развитие 1-урок' : 'Personal Development Lesson 1', duration: '14:20', isFree: true, url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4' },
+      { id: '1', title: language === 'uz' ? 'Shaxsiy rivojlanish 1-dars' : language === 'ru' ? 'Личностное развитие 1-урок' : 'Personal Development Lesson 1', duration: '14:20', isFree: true, url: 'https://archive.org/download/Rick_Astley_Never_Gonna_Give_You_Up/Rick_Astley_Never_Gonna_Give_You_Up.mp4' },
       { id: '2', title: language === 'uz' ? 'Shaxsiy rivojlanish 2-dars' : language === 'ru' ? 'Личностное развитие 2-урок' : 'Personal Development Lesson 2', duration: '22:15', isFree: false, url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
       { id: '3', title: language === 'uz' ? 'Shaxsiy rivojlanish 3-dars' : language === 'ru' ? 'Личностное развитие 3-урок' : 'Personal Development Lesson 3', duration: '18:40', isFree: false, url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4' },
       { id: '4', title: language === 'uz' ? 'Shaxsiy rivojlanish 4-dars' : language === 'ru' ? 'Личностное развитие 4-урок' : 'Personal Development Lesson 4', duration: '25:05', isFree: false, url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4' }
@@ -472,6 +472,13 @@ export default function DemoPlatform({ onClose }: { onClose: () => void }) {
 
     return () => clearInterval(watermarkInterval);
   }, []);
+
+  // Pause the video player when screen capture/recording is detected
+  useEffect(() => {
+    if (screenCaptureDetected && videoPlayerRef.current) {
+      videoPlayerRef.current.pause();
+    }
+  }, [screenCaptureDetected]);
 
   // Save changes to localStorage helper
   const updateCurrentUser = (user: typeof currentUser) => {
@@ -801,22 +808,7 @@ export default function DemoPlatform({ onClose }: { onClose: () => void }) {
                     <div className="absolute inset-0 z-10 bg-white pointer-events-none mix-blend-overlay animate-pulse opacity-15"></div>
                   )}
 
-                  {/* Anti-rec dynamic color watermark */}
-                  {!screenCaptureDetected && (
-                    <div 
-                      className="absolute z-10 select-none pointer-events-none transition-all duration-1000 ease-in-out font-mono text-[9px] sm:text-xs font-bold leading-tight drop-shadow-md text-center bg-black/30 py-1.5 px-3 rounded-xl border border-white/10"
-                      style={{ 
-                        left: `${watermarkPos.x}%`, 
-                        top: `${watermarkPos.y}%`,
-                        color: watermarkColor,
-                        textShadow: '0 1px 3px rgba(0,0,0,0.8)'
-                      }}
-                    >
-                      <span className="block">🔐 Creatorra Secure Watermark</span>
-                      <span className="block font-black">{currentUser ? currentUser.name : 'Jasur Shermatov'} ({currentUser ? currentUser.phone : '+998 90 321 45 67'})</span>
-                      <span className="block opacity-80">IP: 178.218.201.21 • UTC {new Date().toLocaleTimeString()}</span>
-                    </div>
-                  )}
+
 
                   {/* Recording software block screen overlay */}
                   {screenCaptureDetected ? (
@@ -831,17 +823,10 @@ export default function DemoPlatform({ onClose }: { onClose: () => void }) {
                         {d.playerBlockedWarning}
                       </p>
                       
-                      {/* Collapsed security warning logs */}
-                      <div className="mt-4 p-4 bg-slate-900 border border-slate-800 rounded-2xl max-w-md text-left text-[11px] font-mono text-slate-350 space-y-1.5">
-                        <p className="text-[#7A19FF] font-bold">
-                          {d.identifiersLogged}
-                        </p>
-                        <hr className="border-slate-800" />
-                        <p>👤 <span className="text-slate-500">{d.studentName}</span> {currentUser ? currentUser.name : 'Jasur Shermatov'}</p>
-                        <p>📞 <span className="text-slate-500">{d.phone}</span> {currentUser ? currentUser.phone : '+998 90 321 45 67'}</p>
-                        <p>🖥️ <span className="text-slate-500">{d.systemIp}</span> 178.218.201.21</p>
-                        <p>🛡️ <span className="text-slate-500">{d.securityLog}</span> {d.securityDeviceNote}</p>
-                      </div>
+                      {/* Screen recording block message without showing logs/numbers */}
+                      <p className="text-slate-500 text-[11px] font-mono mt-3">
+                        {language === 'uz' ? 'Xavfsiz ulanish: faol' : language === 'ru' ? 'Безопасное соединение: активно' : 'Secure connection: active'}
+                      </p>
 
                       <button 
                         onClick={() => setScreenCaptureDetected(false)}
@@ -860,6 +845,8 @@ export default function DemoPlatform({ onClose }: { onClose: () => void }) {
                       src={lessons[selectedLessonIndex].url}
                       className="w-full h-full object-cover"
                       controls
+                      controlsList="nodownload"
+                      onContextMenu={(e) => e.preventDefault()}
                       autoPlay
                       muted
                       playsInline
