@@ -4,7 +4,7 @@ import {
   DollarSign, Plus, Eye, Check, AlertCircle, RefreshCw, Smartphone, 
   Key, HardDrive, HelpCircle, Activity, LayoutDashboard, Copy, 
   ExternalLink, Sparkles, Send, EyeOff, ShieldAlert, CheckCircle2,
-  FileSpreadsheet, ArrowLeft, ArrowRight
+  FileSpreadsheet, ArrowLeft, ArrowRight, Star
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -381,6 +381,62 @@ export default function DemoPlatform({ onClose }: { onClose: () => void }) {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadStatusMsg, setUploadStatusMsg] = useState('');
 
+  // Reviews state with high fidelity mock student ratings
+  const [reviews, setReviews] = useState([
+    {
+      id: '1',
+      name: 'Farrux Xolmatov',
+      rating: 5,
+      commentUz: "Ushbu darslar shaxsiy rivojlanishim va pulga bo'lgan qarashlarimni butunlay o'zgartirdi! Avval hech bunday chuqur tushunchaga ega bo'lmagandim. Rahmat muallifga!",
+      commentRu: "Эти уроки полностью изменили мое отношение к личному росту и деньгам! Очень глубокий материал. Спасибо автору!",
+      commentEn: "These lessons completely changed my mindset on personal growth and money! Extremely deep material. Thank you, creator!",
+      dateUz: 'Yaqinda',
+      dateRu: 'Недавно',
+      dateEn: 'Just now',
+      avatarColor: 'bg-indigo-650'
+    },
+    {
+      id: '2',
+      name: 'Maftuna Saidova',
+      rating: 5,
+      commentUz: "Darslar mukammal yozilgan, ayniqsa pleyerning xavfsizligi va qorayishi darslarni o'g'irlamoqchi bo'lganlarga dars bo'libdi. Premium darajada tayyorlangan!",
+      commentRu: "Уроки отлично записаны, особенно безопасность плеера. Очень радует качество подачи!",
+      commentEn: "Lessons are beautifully made, especially the player security feature. Highly recommend!",
+      dateUz: '1 kun avval',
+      dateRu: '1 день назад',
+      dateEn: '1 day ago',
+      avatarColor: 'bg-emerald-650'
+    },
+    {
+      id: '3',
+      name: 'Alisher Tursunov',
+      rating: 5,
+      commentUz: "Biznes psixologiyasi borasida eng foydali ma'lumotlar shu yerda ekan. 199k juda ham arzon bunday bilim uchun. Hamma darslar bitta to'lov bilan ochilgani ham juda qulay.",
+      commentRu: "Самая полезная информация по психологии бизнеса здесь. 199k — это копейки за такие знания. Все уроки открылись за одну оплату!",
+      commentEn: "This is the most useful info on business psychology. 199k is incredibly cheap for this knowledge. All lessons opened after one payment!",
+      dateUz: '3 kun avval',
+      dateRu: '3 дня назад',
+      dateEn: '3 days ago',
+      avatarColor: 'bg-amber-650'
+    },
+    {
+      id: '4',
+      name: "Zilola G'ofurova",
+      rating: 4,
+      commentUz: "Yangi darslarni sabrsizlik bilan kutib qolaman. Video sifati va ma'ruzalar juda chiroyli va tushunarli tayyorlangan.",
+      commentRu: "С нетерпением жду новых уроков. Качество видео и лекций просто на высшем уровне.",
+      commentEn: "Looking forward to new lessons. Video quality and speech articulation is outstanding.",
+      dateUz: '1 hafta avval',
+      dateRu: '1 неделю назад',
+      dateEn: '1 week ago',
+      avatarColor: 'bg-purple-650'
+    }
+  ]);
+
+  const [userRating, setUserRating] = useState(5);
+  const [userComment, setUserComment] = useState('');
+  const [userName, setUserName] = useState('');
+
   // Course Curriculum mock list
   const [lessons, setLessons] = useState([
     { id: '1', title: language === 'uz' ? 'Shaxsiy rivojlanish 1-dars' : language === 'ru' ? 'Личностное развитие 1-урок' : 'Personal Development Lesson 1', duration: '14:20', isFree: true, url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4' },
@@ -666,6 +722,34 @@ export default function DemoPlatform({ onClose }: { onClose: () => void }) {
                 <p className="text-xs text-slate-500 font-normal max-w-3xl">
                   {d.studentSimDesc}
                 </p>
+                {/* Course Rating Summary line */}
+                <div className="flex flex-wrap items-center gap-2.5 pt-2 text-xs">
+                  <div 
+                    onClick={() => {
+                      const el = document.getElementById('student-reviews-container');
+                      el?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="flex items-center gap-1 bg-amber-50 border border-amber-200/85 hover:bg-amber-100/60 rounded-xl px-2.5 py-1 text-amber-800 font-extrabold shadow-3xs cursor-pointer transition-all active:scale-98"
+                  >
+                    <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+                    <span>{(reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1)}</span>
+                    <span className="text-amber-500/70 text-[9.5px] font-normal">/ 5.0</span>
+                  </div>
+                  <span className="text-slate-300 font-normal">|</span>
+                  <button 
+                    onClick={() => {
+                      const el = document.getElementById('student-reviews-container');
+                      el?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="text-slate-600 hover:text-[#7A19FF] hover:underline font-bold transition-all text-left cursor-pointer"
+                  >
+                    {reviews.length} {language === 'uz' ? 'ta talaba bahosi' : language === 'ru' ? 'отзывов учеников' : 'student reviews'}
+                  </button>
+                  <span className="text-slate-300 font-normal">|</span>
+                  <span className="text-slate-500 font-sans text-[10px] bg-slate-100/85 border border-slate-200 px-2.5 py-0.5 rounded-lg">
+                    👍 99.1% {language === 'uz' ? 'rekomendatsiya' : language === 'ru' ? 'рекомендаций' : 'recommendation'}
+                  </span>
+                </div>
               </div>
 
               {/* Unlock badge status */}
@@ -914,6 +998,220 @@ export default function DemoPlatform({ onClose }: { onClose: () => void }) {
                     </div>
                   )}
 
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* Course Rating & Reviews Section */}
+            <div id="student-reviews-container" className="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 space-y-8 text-left shadow-xs mt-6">
+              
+              {/* Header */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+                <div>
+                  <span className="text-[10px] uppercase font-mono font-bold tracking-wider text-amber-600 bg-amber-50 border border-amber-100 px-2.5 py-1 rounded-full">
+                    ⭐ {language === 'uz' ? 'KURS REYTINGI' : language === 'ru' ? 'РЕЙТИНГ КУРСА' : 'COURSE RATING'}
+                  </span>
+                  <h3 className="text-lg font-black text-slate-900 mt-2 font-sans">
+                    {language === 'uz' ? 'Talabalar sharhlari va baholari' : language === 'ru' ? 'Отзывы и оценки учеников' : 'Student Feedback & Ratings'}
+                  </h3>
+                  <p className="text-xs text-slate-500 font-normal">
+                    {language === 'uz' ? 'Sinxronlangan va tasdiqlangan barcha talabalarning real vaqtdagi munosabati.' : language === 'ru' ? 'Синхронизированные и проверенные мнения реальных учеников.' : 'Live synchronized feedback from our active members.'}
+                  </p>
+                </div>
+              </div>
+
+              {/* Advanced Ratings Breakdown Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center bg-slate-50/50 p-6 rounded-2xl border border-slate-150">
+                
+                {/* Huge average score */}
+                <div className="md:col-span-4 text-center space-y-2">
+                  <h1 className="text-5xl font-black text-slate-900 tracking-tight font-sans">
+                    {(reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1)}
+                  </h1>
+                  <div className="flex items-center justify-center gap-1">
+                    {[1, 2, 3, 4, 5].map((s) => (
+                      <Star 
+                        key={s} 
+                        className={`w-5 h-5 ${
+                          s <= Math.round(reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length) 
+                            ? 'text-amber-400 fill-amber-400' 
+                            : 'text-slate-200'
+                        }`} 
+                      />
+                    ))}
+                  </div>
+                  <p className="text-xs text-slate-500 font-medium font-sans">
+                    {language === 'uz' ? `Jami ${reviews.length} ta dars bahosi` : language === 'ru' ? `Всего ${reviews.length} оценок` : `Based on ${reviews.length} ratings`}
+                  </p>
+                </div>
+
+                {/* Progress bars bar chart */}
+                <div className="md:col-span-4 space-y-2.5">
+                  {[
+                    { stars: 5, pct: '85%' },
+                    { stars: 4, pct: '12%' },
+                    { stars: 3, pct: '3%' },
+                    { stars: 2, pct: '0%' },
+                    { stars: 1, pct: '0%' }
+                  ].map((bar, bIdx) => (
+                    <div key={bIdx} className="flex items-center gap-3 text-xs text-slate-600 font-medium font-sans">
+                      <span className="w-3 text-right">{bar.stars}</span>
+                      <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400 shrink-0" />
+                      <div className="flex-1 h-2 bg-slate-200 rounded-full overflow-hidden">
+                        <div className="h-full bg-amber-400 rounded-full" style={{ width: bar.pct }}></div>
+                      </div>
+                      <span className="w-8 text-right font-mono text-[10.5px] text-slate-400">{bar.pct}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Quick Info Box */}
+                <div className="md:col-span-4 p-5 bg-white border border-slate-200 rounded-xl space-y-2.5 text-center md:text-left">
+                  <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5 justify-center md:justify-start">
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>100% {language === 'uz' ? 'Tasdiqlangan foydalanuvchilar' : language === 'ru' ? 'Проверенные пользователи' : 'Verified Users'}</span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 leading-normal font-normal">
+                    {language === 'uz' 
+                      ? 'Ushbu reytinglar dars uchun Uzcard/Humo orqali to\'lov qilgan haqiqiy talabalarimiz tomonidan yuborilgan.' 
+                      : language === 'ru'
+                      ? 'Все оценки оставлены реальными учениками, оплатившими доступ через Uzcard/Humo.'
+                      : 'These reviews represent real feedback from students who processed test payments via Humo/Uzcard.'}
+                  </p>
+                </div>
+
+              </div>
+
+              {/* Two columns: Left: Write a review form, Right: Reviews Feed */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                {/* Form to leave a review (Left Column - 4/12) */}
+                <div className="lg:col-span-4 p-5 bg-slate-50/70 border border-slate-200 rounded-2xl space-y-4">
+                  <h4 className="text-xs font-black text-slate-800 uppercase font-sans tracking-wide">
+                    ✍️ {language === 'uz' ? 'Fikr qoldirish' : language === 'ru' ? 'Оставить отзыв' : 'Write a Review'}
+                  </h4>
+
+                  <form onSubmit={(e) => {
+                    e.preventDefault();
+                    if (!userComment.trim()) return;
+                    const newRev = {
+                      id: (reviews.length + 1).toString(),
+                      name: userName.trim() || (language === 'uz' ? 'Guvoh Talaba' : language === 'ru' ? 'Анонимный Студент' : 'Anonymous Student'),
+                      rating: userRating,
+                      commentUz: userComment,
+                      commentRu: userComment,
+                      commentEn: userComment,
+                      dateUz: language === 'uz' ? 'Hozirgina' : language === 'ru' ? 'Только что' : 'Just now',
+                      dateRu: language === 'uz' ? 'Hozirgina' : language === 'ru' ? 'Только что' : 'Just now',
+                      dateEn: language === 'uz' ? 'Hozirgina' : language === 'ru' ? 'Только что' : 'Just now',
+                      avatarColor: 'bg-indigo-600'
+                    };
+                    setReviews([newRev, ...reviews]);
+                    setUserComment('');
+                    setUserName('');
+                    setUserRating(5);
+                  }} className="space-y-4">
+                    
+                    {/* Stars Select */}
+                    <div className="space-y-1">
+                      <label className="block text-[11px] font-bold text-slate-500 font-sans">
+                        {language === 'uz' ? 'Baholang (Yulduzcha):' : language === 'ru' ? 'Ваша оценка (Звезды):' : 'Select Stars:'}
+                      </label>
+                      <div className="flex items-center gap-1.5">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <button
+                            type="button"
+                            key={star}
+                            onClick={() => setUserRating(star)}
+                            className="text-slate-350 hover:scale-110 transition-transform cursor-pointer"
+                          >
+                            <Star 
+                              className={`w-6 h-6 ${
+                                star <= userRating 
+                                  ? 'text-amber-400 fill-amber-400' 
+                                  : 'text-slate-200'
+                              }`} 
+                            />
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* F.I.SH Input */}
+                    <div className="space-y-1">
+                      <label className="block text-[11px] font-bold text-slate-500 font-sans">
+                        {language === 'uz' ? 'Ismingiz (F.I.Sh):' : language === 'ru' ? 'Ваше имя (Ф.И.О):' : 'Your name:'}
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Masalan: Jamshid Alimov"
+                        value={userName}
+                        onChange={(e) => setUserName(e.target.value)}
+                        className="w-full text-xs p-2.5 border border-slate-200 bg-white rounded-xl focus:outline-none focus:border-[#7A19FF]"
+                      />
+                    </div>
+
+                    {/* Review text box */}
+                    <div className="space-y-1">
+                      <label className="block text-[11px] font-bold text-slate-500 font-sans">
+                        {language === 'uz' ? 'Kurs haqida mulohazangiz:' : language === 'ru' ? 'Ваш отзыв о курсе:' : 'Your message:'}
+                      </label>
+                      <textarea
+                        rows={3}
+                        required
+                        placeholder={language === 'uz' ? 'Fikringizni qoldiring...' : language === 'ru' ? 'Напишите ваш отзыв...' : 'Write your comment here...'}
+                        value={userComment}
+                        onChange={(e) => setUserComment(e.target.value)}
+                        className="w-full text-xs p-2.5 border border-slate-200 bg-white rounded-xl focus:outline-none focus:border-[#7A19FF] resize-none"
+                      />
+                    </div>
+
+                    {/* Submit Button */}
+                    <button
+                      type="submit"
+                      disabled={!userComment.trim()}
+                      className="w-full py-2 bg-gradient-to-r from-[#7A19FF] to-[#387BFF] disabled:opacity-40 text-white text-xs font-black rounded-xl cursor-pointer hover:brightness-105 transition-all shadow-3xs"
+                    >
+                      {language === 'uz' ? 'Yuborish' : language === 'ru' ? 'Отправить отзыв' : 'Submit feedback'}
+                    </button>
+
+                  </form>
+                </div>
+
+                {/* Reviews Stream Feed (Right Column - 8/12) */}
+                <div className="lg:col-span-8 space-y-4">
+                  {reviews.map((rev) => (
+                    <div key={rev.id} className="p-4 bg-slate-50/50 border border-slate-150 rounded-2xl text-left space-y-3 hover:translate-x-0.5 transition-transform">
+                      <div className="flex items-center justify-between gap-3">
+                        
+                        {/* Profile initials + Name */}
+                        <div className="flex items-center gap-3">
+                          <div className={`w-8.5 h-8.5 rounded-full ${rev.avatarColor || 'bg-slate-300'} flex items-center justify-center text-white text-xs font-bold font-sans`}>
+                            {rev.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()}
+                          </div>
+                          <div>
+                            <span className="block text-xs font-extrabold text-slate-800">{rev.name}</span>
+                            <span className="block text-[10px] text-slate-400 font-normal">
+                              {language === 'uz' ? rev.dateUz : language === 'ru' ? rev.dateRu : rev.dateEn}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Star Rating value inside review */}
+                        <div className="flex items-center gap-0.5 bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/10">
+                          <Star className="w-3 h-3 text-amber-500 fill-amber-500 shrink-0" />
+                          <span className="text-[10px] font-black text-amber-700 font-sans">{rev.rating}</span>
+                        </div>
+
+                      </div>
+
+                      <p className="text-xs text-slate-600 leading-relaxed font-sans font-normal italic pl-0.5">
+                        "{language === 'uz' ? rev.commentUz : language === 'ru' ? rev.commentRu : rev.commentEn}"
+                      </p>
+                    </div>
+                  ))}
                 </div>
 
               </div>
